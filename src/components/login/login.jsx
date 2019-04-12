@@ -1,5 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import Logo from '../../components/logo/logo';
+import * as _User from '../../localStorage/userStorage';
+import { Redirect } from 'react-router-dom';
+import { getRedirectTo } from '../../utils'
 
 import {
   NavBar,
@@ -25,6 +28,10 @@ export default class Login extends Component {
     )
   }
 
+
+  componentWillMount() {
+    this.props.initUser();
+  }
   doLogin = () => {
     const { username, password } = this.state;
 
@@ -50,38 +57,43 @@ export default class Login extends Component {
   }
 
   componentDidUpdate() {
-    
+
     if (this.props.user.userId === -1 && this.props.user.msg.length !== 0) {
       Toast.fail(this.props.user.msg, 1.6);
       this.props.clearMessage();
     }
 
     if (this.props.user.userId !== -1) {
-     
-      const {header,type} = this.props.user;
-      if(header.length === 0){
-        Toast.loading("登录成功,跳转到信息修改页面!", 1.6);
-          if(type === "seeker"){
-            setTimeout(() => {
-              this.props.history.replace("/main/seeker-info");
-            }, 1500);
-            return ;
-          }else{
-            setTimeout(() => {
-              this.props.history.replace("/main/boss-info");
-            }, 1500);
-            return ;
-          }
-      }
+      const { redirectTo } = this.props.user;
+
 
       Toast.loading("登录成功,跳转到主界面!", 1.6);
+
+
       setTimeout(() => {
-        this.props.history.replace("/");
+        this.props.history.replace(redirectTo);
       }, 1500);
     }
   }
 
   render() {
+
+
+    const userString = _User.getUser();
+
+    if (userString !== "undefined") {
+
+      const localUser = JSON.parse(userString);
+
+      if (localUser !== null) {
+        console.log(localUser)
+        const { type, header } = localUser
+
+        const path = getRedirectTo(type, header);
+
+        return <Redirect to={path} />
+      }
+    }
 
     return (<Fragment>
       <div>

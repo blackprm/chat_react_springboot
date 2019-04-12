@@ -1,8 +1,9 @@
 import axios from 'axios';
+import {baseUrl} from '../config/main'
 export default function ajax(url,data,method="GET") {
 
   console.log(data + " ============= ");
-  axios.defaults.baseURL = 'http://10.200.32.234/';
+  axios.defaults.baseURL = `http://${baseUrl}/`;
   axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
 
 

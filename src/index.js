@@ -7,15 +7,15 @@ import Main from "./containers/main/main";
 import {Provider} from 'react-redux';
 import  store from './redux/store';
 
-
 ReactDom.render((
 
   <Provider store={store}>
     <HashRouter>
       <Switch>
-        <Route path={"/register"} component={Register}></Route>
-        <Route path={"/login"} component={Login}></Route>
-        <Route  component={Main}></Route>
+        <Route path={"/register"} component={Register}/>
+        <Route path={"/login"} component={Login} />
+        <Route path={"/main"} component={Main} />
+        <Route component={Register}/>
       </Switch>  
     </HashRouter>
 

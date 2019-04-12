@@ -1,1 +1,1 @@
-export const url = "127.0.0.1"
+export const baseUrl = "10.200.224.166";

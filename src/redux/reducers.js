@@ -1,40 +1,54 @@
 /**
- * 包含n个reducer 函数,根据type和老的state返回新的state 
+ * 包含n个reducer 函数,根据type和老的state返回新的state
  */
 import {
   AUTH_SUCCESS,
   ERROR_MESSAGE,
   CLEAR_MESSAGE,
   RECIVE_USER,
-  INIT_USER
-} from './action-types'
-import { combineReducers } from 'redux'
-import { getRedirectTo } from '../utils'
+  INIT_USER,
+  GET_LIST,
+  REFRESH_USER
+} from "./action-types";
+import { combineReducers } from "redux";
+import { getRedirectTo } from "../utils";
 const initUser = {
   userId: -1,
-  userName: '',
+  userName: "",
   msg: "",
   type: ""
-}
+};
 function user(state = initUser, action) {
   switch (action.type) {
     case CLEAR_MESSAGE:
-      return { ...state, msg: '' };
+      return { ...state, msg: "" };
     case AUTH_SUCCESS:
       const { type, header } = action.data;
       const to = getRedirectTo(type, header);
       return { ...state, ...action.data, redirectTo: to };
     case RECIVE_USER:
-      return {...action.data}
+      return { ...action.data };
     case INIT_USER:
-      return {...initUser}
+      return { ...initUser };
     case ERROR_MESSAGE:
       return { ...state, msg: action.data };
+
+    case REFRESH_USER:
+      return {...action.data};
     default:
       return state;
   }
 }
 
+function userList(state = [], action) {
+  switch (action.type) {
+    case GET_LIST:
+      return [...action.data];
+    default:
+      return state;
+  }
+}
 export default combineReducers({
-  user
-})
+  user,
+  userList
+});

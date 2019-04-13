@@ -1,3 +1,13 @@
 .header-img{
   margin-left: 33%
 }
+.am-card-header-content>img{
+  width:50px;
+}
+
+.top {
+  position: fixed;
+  top:0;
+  width: 100%;
+  z-index: 1000;
+}

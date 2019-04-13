@@ -6,3 +6,7 @@ export const  CLEAR_MESSAGE = "CLEAR_MESSAGE";
 export const RECIVE_USER = "recice_user";
 // 更新失败后,重新初始化用户
 export const INIT_USER = "init_uert";
+
+export const GET_LIST = "get_list";
+
+export const REFRESH_USER = "refresh_user"; 

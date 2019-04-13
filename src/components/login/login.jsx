@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Logo from '../../components/logo/logo';
 import * as _User from '../../localStorage/userStorage';
-import { Redirect } from 'react-router-dom';
 import { getRedirectTo } from '../../utils'
 
 import {
@@ -30,7 +29,26 @@ export default class Login extends Component {
 
 
   componentWillMount() {
+    const userString = _User.getUser();
+
+    if (userString !== "undefined") {
+
+      const localUser = JSON.parse(userString);
+
+      if (localUser !== null) {
+        console.log(localUser)
+        const { type, header } = localUser
+
+        const path = getRedirectTo(type, header);
+
+        this.props.history.replace(path);
+        return ;
+      }
+    }
+
     this.props.initUser();
+    _User.clearUser();
+    
   }
   doLogin = () => {
     const { username, password } = this.state;
@@ -79,21 +97,7 @@ export default class Login extends Component {
   render() {
 
 
-    const userString = _User.getUser();
-
-    if (userString !== "undefined") {
-
-      const localUser = JSON.parse(userString);
-
-      if (localUser !== null) {
-        console.log(localUser)
-        const { type, header } = localUser
-
-        const path = getRedirectTo(type, header);
-
-        return <Redirect to={path} />
-      }
-    }
+    
 
     return (<Fragment>
       <div>

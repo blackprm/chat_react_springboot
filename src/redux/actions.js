@@ -1,18 +1,21 @@
 
-import { reqRegister, reqLogin, reqUpdateUserInfo } from '../api'
+import { reqRegister, reqLogin, reqUpdateUserInfo,reqListForType } from '../api'
 import {
   AUTH_SUCCESS,
   ERROR_MESSAGE,
   CLEAR_MESSAGE,
   RECIVE_USER,
-  INIT_USER
+  INIT_USER,
+  GET_LIST,
+  REFRESH_USER
 } from './action-types'
 
 // register同步action
-const authSuccess = (user) => ({ type: AUTH_SUCCESS, data: user })
+export const authSuccess = (user) => ({ type: AUTH_SUCCESS, data: user })
 const errorMsg = (msg) => ({ type: ERROR_MESSAGE, data: msg })
 export const clearMessage = () => ({ type: CLEAR_MESSAGE })
 export const initUser = () => ({type:INIT_USER})
+export const refreshUser = (user) => ({type:REFRESH_USER,data:user})
 // 注册的异步action
 export const register = (user) => {
 
@@ -60,4 +63,13 @@ export const updateUserInfo = (user) => {
     }
 
   }
+}
+
+
+export const getList = (type) => {
+    return async dispatch => {
+      const resp = await reqListForType(type);
+      const {data} = resp;
+      dispatch({type:GET_LIST,data:data})
+    }
 }

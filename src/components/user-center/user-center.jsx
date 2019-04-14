@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Result, List, Button, WhiteSpace, Modal } from "antd-mobile";
 import * as _User from "../../localStorage/userStorage";
-import { Redirect } from "react-router-dom";
+import {socket,destory_socket} from '../../utils/socket'
 export default class UserCenter extends Component {
   logout = () => {
     Modal.alert("确认退出?", "退出后需要从新登录！！！", [
@@ -12,6 +12,7 @@ export default class UserCenter extends Component {
         text: "确定",
         onPress: () => {
           _User.clearUser();
+          destory_socket(socket);
           this.props.history.replace("/login");
         }
       }

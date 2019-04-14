@@ -10,3 +10,7 @@ export const INIT_USER = "init_uert";
 export const GET_LIST = "get_list";
 
 export const REFRESH_USER = "refresh_user"; 
+
+export const GET_ROOMS_BY_USERID = "get_rooms_by_userId";
+
+export const GET_ROOM_BY_FROM_TO = "get_rooms_by_from_to";

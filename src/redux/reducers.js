@@ -8,7 +8,8 @@ import {
   RECIVE_USER,
   INIT_USER,
   GET_LIST,
-  REFRESH_USER
+  REFRESH_USER,
+  GET_ROOMS_BY_USERID
 } from "./action-types";
 import { combineReducers } from "redux";
 import { getRedirectTo } from "../utils";
@@ -34,7 +35,7 @@ function user(state = initUser, action) {
       return { ...state, msg: action.data };
 
     case REFRESH_USER:
-      return {...action.data};
+      return { ...action.data };
     default:
       return state;
   }
@@ -48,7 +49,18 @@ function userList(state = [], action) {
       return state;
   }
 }
+
+function rooms(state = [], action) {
+  switch (action.type) {
+    case GET_ROOMS_BY_USERID:
+      return [...action.data];
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
   user,
-  userList
+  userList,
+  rooms
 });

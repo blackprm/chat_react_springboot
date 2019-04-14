@@ -3,7 +3,7 @@ import Logo from "../../components/logo/logo";
 import axios from "../../utils/axios-utils";
 import { getRedirectTo } from "../../utils/index";
 import * as _User from '../../localStorage/userStorage'
-
+import {socket} from '../../utils/socket'
 // import * as _User from '../../localStorage/userStorage'
 // import { Redirect } from "react-router-dom";
 // import { getRedirectTo } from "../../utils";
@@ -19,6 +19,11 @@ import {
 } from "antd-mobile";
 
 export default class Register extends Component {
+  constructor(){
+    super();
+    console.log(socket);
+  }
+
   state = {
     username: "",
     username_ok: false,

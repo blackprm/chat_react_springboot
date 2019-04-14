@@ -9,6 +9,8 @@ import { NavBar } from "antd-mobile";
 import UserCenter from "../user-center/user-center";
 import NotFound from "../../components/not-found/not-found";
 import FooterNav from "../../components/footer-nav/footer-nav";
+import Chat from "../chat/chat";
+import { init_socket, socket } from "../../utils/socket";
 
 export default class Main extends Component {
   navList = [
@@ -43,9 +45,10 @@ export default class Main extends Component {
   ];
 
   render() {
+    init_socket(socket);
     const { navList } = this;
     const path = this.props.location.pathname;
-    
+
     const e = navList.find(v => v.path === path);
     if (e) {
       if (e.path === "/main/seeker") {
@@ -61,13 +64,14 @@ export default class Main extends Component {
 
     return (
       <Fragment>
-        {e ? <NavBar className={'top'}>{e.title}</NavBar> : null}
+        {e ? <NavBar className={"top"}>{e.title}</NavBar> : null}
         <Switch>
           {navList.map((value, index) => (
             <Route path={value.path} component={value.component} key={index} />
           ))}
           <Route path="/main/boss-info" component={BossInfo} />
           <Route path="/main/seeker-info" component={SeekerInfo} />
+          <Route path="/main/chat/:userid" component={Chat} />
           <Route component={NotFound} />
         </Switch>
         {e ? <FooterNav navList={navList} curNav={e} /> : null}

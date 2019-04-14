@@ -40,7 +40,9 @@ export default class Login extends Component {
         const { type, header } = localUser
 
         const path = getRedirectTo(type, header);
-
+        if(path === 'none'){
+          return ;
+        }
         this.props.history.replace(path);
         return ;
       }

@@ -1,12 +1,14 @@
 import React, { Component, Fragment } from "react";
 import { WingBlank, WhiteSpace, Card } from "antd-mobile";
 import { withRouter } from "react-router-dom";
-import {socket,init_socket} from '../../utils/socket'
+import { connect } from "react-redux";
+import { getRoomByFromTo_action } from "../../redux/actions";
+import { socket, init_socket } from "../../utils/socket";
 const Header = Card.Header;
 const Body = Card.Body;
 
 class UserList extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     init_socket(socket);
@@ -22,9 +24,13 @@ class UserList extends Component {
               <Fragment key={i}>
                 <WhiteSpace />
                 <Card
-                  onClick={() =>
-                    this.props.history.push(`/main/chat/${v.userId}`)
-                  }
+                  onClick={() => {
+                    this.props.getRoomByFromTo_action(
+                      this.props.user.userId,
+                      v.userId
+                    );
+                    this.props.history.push(`/main/chat/${v.userId}`);
+                  }}
                 >
                   <Header
                     extra={v.userName}
@@ -46,4 +52,7 @@ class UserList extends Component {
   }
 }
 
-export default withRouter(UserList);
+export default connect(
+  state => ({ user: state.user }),
+  { getRoomByFromTo_action }
+)(withRouter(UserList));

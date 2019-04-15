@@ -1,9 +1,11 @@
-export const getRoomNtReadNum = chatList => {
+export const getRoomNtReadNum = (chatList,from) => {
   let i = 0;
   let count = 0;
   for (i = 0; i < chatList.length; i++) {
     const chat = chatList[i];
-    if (chat.isRead === 0) {
+    // eslint-disable-next-line eqeqeq
+
+    if (chat.isRead === 0 && chat.from != from) {
       count++;
     }
   }

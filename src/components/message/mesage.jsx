@@ -25,7 +25,7 @@ export default class Message extends Component {
         <WingBlank>
           <List>
             {rooms.map((value,index) => {
-              const noReadNum = getRoomNtReadNum(value.chats);
+              const noReadNum = getRoomNtReadNum(value.chats,this.state.user.userId);
               const toUser  = this.state.user.userId === value.user1.userId ? value.user2:value.user1;
               return (
                 <div key={index}>

@@ -85,7 +85,7 @@ export const sendMsg = ({ from, to, content }) => {
 };
 
 export const getRoomsByUserId = userId => {
-  return async (dispatch,state) => {
+  return async (dispatch) => {
 
     const resp = await reqRoomListById(userId);
     const { data } = resp;
@@ -102,4 +102,15 @@ export const getRoomsByUserId = userId => {
     
   };
 };
+
+export const getRoomByFromTo_action = (from,to) => {
+  return async dispatch => {
+    const resp = await reqRoomByFromTo(from,to);
+    const {data} = resp;
+    const  {room}  = data;
+
+    console.log(resp);
+    dispatch({type:GET_ROOM_BY_FROM_TO,data:room})
+  }
+}
 

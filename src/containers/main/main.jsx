@@ -11,8 +11,12 @@ import NotFound from "../../components/not-found/not-found";
 import FooterNav from "../../components/footer-nav/footer-nav";
 import Chat from "../chat/chat";
 import { init_socket, socket } from "../../utils/socket";
+import {getRoomsByUserId,refreshUser} from '../../redux/actions';
+import * as _User from '../../localStorage/userStorage'
+import {connect} from 'react-redux'
 
-export default class Main extends Component {
+class Main extends Component {
+
   navList = [
     {
       path: "/main/boss",
@@ -43,8 +47,15 @@ export default class Main extends Component {
       icon: "center"
     }
   ];
+  componentWillMount(){
 
+    const userString = _User.getUser();
+    const _user = JSON.parse(userString);
+    this.props.refreshUser(_user);
+  }
   render() {
+    const userId = this.props.user.userId;
+    this.props.getRoomsByUserId(userId);
     init_socket(socket);
     const { navList } = this;
     const path = this.props.location.pathname;
@@ -79,3 +90,10 @@ export default class Main extends Component {
     );
   }
 }
+export default connect(
+  state => ({user:state.user}),
+  {
+    getRoomsByUserId,
+    refreshUser
+  }
+)(Main);

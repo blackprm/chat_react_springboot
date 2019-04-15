@@ -26,14 +26,16 @@ export const init_socket = socket => {
         socket.connect.onmessage = event => {
           const {data} = event;
           const messageObject = JSON.parse(data);
-  
+          const {dispatch} = store;
+
+          
           const {from ,to} = messageObject;
           reqRoomByFromTo(from,to).then((res) => {
             const {room} = res.data;
             dispatch({type:GET_ROOM_BY_FROM_TO,data:room})
           })
 
-          const {dispatch} = store;
+      
           
         };
       }
